@@ -8,6 +8,21 @@
 * **Francisco Carvajal** - [@Sn1k-12](https://github.com/Sn1k-12)
 * **Gerzon Toro** - [@gerzontoro](https://github.com/gerzontoro)
 
+## 🧱 Stack Principal
+
+| Capa (Arquitectura Técnica) | Tecnología | Versión | Propósito |
+|---|---|---|---|
+| **Cliente - Interfaz P02** | React + Vite | 18 / 5.4 | UI móvil `max-w-md`, Framer Motion, Tailwind 3.4 |
+| **Cliente - Estado** | React Context (RouteProvider) | — | `src/state/store.jsx` — Gestor de Estado |
+| **Cliente - HTTP** | Axios | 1.x | `src/api/httpClient.js` — POST directo a Router sin Nginx |
+| **Servidor - Router** | Express (simulado) | 4.x | `src/server/router.js` — `POST /api/rutas/sugerir` |
+| **Servidor - Validación** | Zod | 4.x | `src/schemas/routeSchema.js` — valida tiempo/presupuesto/intereses |
+| **Servidor - Lógica** | Motor de Filtrado | — | `src/server/controller.js` — arma itinerario hiper-local |
+| **Servidor - Datos** | Mongoose ODM + Repositorio | 8.x | `src/server/repository.js` → `ODM.find()` |
+| **Datos - Persistencia** | MongoDB NoSQL | 7.x | `db/` — colección `pois` esquemas variables |
+
+> Código organizado por capas en `src/` según Anexo B. Infra (Nginx/PM2) omitida — hosting a definir (Vercel / Render).
+
 ## 🔗 Enlace al prototipo web
 
 * **Prototipo navegable (deploy):** [https://santiago-inteligente.vercel.app](#) *(placeholder — reemplazar al deployar en Vercel/Netlify)*
@@ -67,8 +82,4 @@ npm run build
 npm run preview
 ```
 
-### Stack
-* Vite + React 18 + Tailwind CSS 3.4 + Framer Motion
-* Cliente: Axios + Zod (validación) — Capa Cliente
-* Servidor: Express (simulado), Mongoose ODM — Capa Servidor
-* Datos: MongoDB NoSQL (colección POIs esquemas variables)
+
