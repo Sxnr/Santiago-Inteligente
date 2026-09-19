@@ -1,33 +1,67 @@
 # Santiago Inteligente 🇨🇱
 
-> **Promesa de valor:** [Escriban aquí en UNA SOLA FRASE: para quién que sufre qué problema, el producto entrega qué resultado concreto].
+> Para turistas que visitan Santiago y se abruman eligiendo entre demasiadas opciones, Santiago Inteligente entrega en tres pasos una ruta de actividades ajustada al tiempo y al presupuesto que quieren destinar.
 
-## 👥 Equipo de Desarrollo
+## 👥 Integrantes
 
 * **Francisco Carrera** - [@Sxnr](https://github.com/Sxnr)
 * **Francisco Carvajal** - [@Sn1k-12](https://github.com/Sn1k-12)
 * **Gerzon Toro** - [@gerzontoro](https://github.com/gerzontoro)
 
-## 📌 Enlaces Importantes (Hito 1)
+## 🔗 Enlace al prototipo web
 
-* 🎨 [Prototipo Navegable (Figma/etc)](#) *(Enlace público al prototipo de ≥3 pantallas)*
-* 📄 [Documento de Propuesta Comercial](./docs/hito-1/propuesta.pdf)
-* 📊 [Láminas de Presentación](./docs/hito-1/presentacion.pdf)
-* 🗺️ [Diagrama de Arquitectura](./docs/hito-1/arquitectura.png)
+> [https://santiago-inteligente.vercel.app](#) *(Placeholder - Reemplazar con URL deployada en Vercel/Netlify)*
+
+> Alternativa local: `npm run dev` → http://localhost:5173
+
+## 📄 Enlace a los documentos
+
+> [https://drive.google.com/drive/folders/santiago-inteligente-docs](#) *(Placeholder - Reemplazar con enlace a Drive/Notion con propuesta comercial, láminas y arquitectura)*
+
+> Documentos incluidos:
+> - Propuesta Comercial (`docs/hito-1/propuesta.pdf`)
+> - Láminas de Presentación (`docs/hito-1/presentacion.pdf`)
+> - Diagrama de Arquitectura (`docs/hito-1/arquitectura.png`)
+
+---
 
 ## ⚙️ Instalación y Ejecución
-*(Esta sección se completará en detalle para el Hito 2 y Hito 3)*
 
 ### Prerrequisitos
 * Node.js v18+
-* MongoDB local o Atlas
-* Expo CLI
+* npm v9+
 
-### Variables de Entorno
-Renombrar el archivo `backend/.env.example` a `backend/.env` y configurar las variables locales. **NUNCA** subir el archivo `.env` con credenciales reales al repositorio.
-
+### Pasos
 ```bash
-# Ejemplo de configuración local
-cd backend
+# 1. Clonar repositorio
+git clone https://github.com/Sxnr/Santiago-Inteligente.git
+cd Santiago-Inteligente
+
+# 2. Instalar dependencias
 npm install
+
+# 3. Ejecutar en desarrollo
 npm run dev
+
+# 4. Build producción
+npm run build
+npm run preview
+```
+
+### Stack
+* Vite + React 18
+* Tailwind CSS 3.4
+* Framer Motion 11
+
+## 📱 Prototipo - 3 Pantallas Navegables
+
+1. **Dashboard Principal (Home)** - Header, búsqueda, filtros, Rutas Populares (click → Detalle), CTA Planifica tu ruta
+2. **Generador de Rutas** - Slider tiempo (1-8h), presupuesto CLP, toggles categorías, Generar Ruta (loading 1s → Detalle)
+3. **Detalle POI/Ruta** - Header imagen, horario/precio, cupón 20% con contador, mapa simulado, guía virtual audio
+
+Navegación por estado React (`useState`) sin React Router, contenida en `max-w-md mx-auto h-screen shadow-xl` para simular app nativa.
+
+## 🎨 Datos Mockeados
+
+Lugares reales: Plaza de Armas, Palacio La Moneda, Cerro San Cristóbal, La Chascona, Bellas Artes, Parque Forestal, Cerro Santa Lucía, Mercado Central. Precios en CLP y horarios reales chilenos.
+
