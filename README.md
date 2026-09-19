@@ -30,13 +30,16 @@
 
 ## 📄 Enlaces a los documentos
 
-> Documentos en la carpeta del repositorio (Anexo B) — no externos:
+> Documentos en la carpeta del repositorio (Anexo B) — separados por uso:
 
-* [Propuesta Comercial (PDF)](./docs/hito-1/propuesta.pdf)
-* [Láminas de Presentación (PDF)](./docs/hito-1/presentacion.pdf)
-* [Diagrama Arquitectura Técnica (PNG)](./docs/hito-1/arquitectura.png)
-* [Diagrama Arquitectura Información](./Arquitectura_Informacion.md)
-* [Diagrama Arquitectura Técnica (Mermaid)](./Arquitectura_tecnica.md)
+* **Presentación** (láminas + mapa información): 
+  * [Láminas (PDF)](./docs/hito-1/presentacion.pdf)
+  * [Arquitectura de Información — árbol para presentación](./docs/presentacion/Arquitectura_Informacion.md)
+  * [Diagrama presentación (PNG exportado)](./docs/hito-1/arquitectura.png)
+* **Informe** (propuesta + técnica):
+  * [Propuesta Comercial (PDF)](./docs/hito-1/propuesta.pdf)
+  * [Arquitectura Técnica — árbol para informe](./docs/informe/Arquitectura_tecnica.md)
+* **Referencia raíz:** [Info](./Arquitectura_Informacion.md) · [Técnica](./Arquitectura_tecnica.md)
 * **Video demostrativo:** [Enlace a video (YouTube/Drive)](#) *(agregar URL)*
 
 ---
