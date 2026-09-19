@@ -34,7 +34,7 @@ const rutasPopularesUI = [
     rating: 4.7,
     reviews: 210,
     precio: "$7.000",
-    imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Museo%20Nacional%20de%20Bellas%20Artes%20Santiago.jpg?width=800",
+    imagen: "https://images.unsplash.com/photo-1540202404-a2f29016b523?q=80&w=800&auto=format&fit=crop",
     fallback: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=800&auto=format&fit=crop",
     lugares: ["Parque Forestal", "Bellas Artes", "GAM"],
   },
@@ -43,10 +43,45 @@ const rutasPopularesUI = [
 const imagenLastarriaReal = "https://commons.wikimedia.org/wiki/Special:FilePath/Jose%20Victorino%20Lastarria.jpg?width=800"
 const fallbackLastarria = "https://images.unsplash.com/photo-1519662978799-67fa9b6d5b3b?q=80&w=800&auto=format&fit=crop"
 
+// Iconos mejorados - no confundibles con Gemini
 const IconBell = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 7-6 5-6 9a1.5 1.5 0 0 1-3 0c0-4-3-2-3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>)
 const IconSearch = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>)
 const IconStar = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="#FFC727" stroke="#FFC727"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)
 const IconClock = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>)
+// Nuevo: Explorar = Brújula
+const IconExplorar = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <circle cx="12" cy="12" r="10"/>
+    <polygon points="16.24 7.76 14.08 20.26 12 17.5 9.92 20.26 7.76 7.76 12 10.5 16.24 7.76" fill="currentColor" stroke="none" opacity="0.9"/>
+    <circle cx="12" cy="12" r="2" fill="white" stroke="currentColor"/>
+  </svg>
+)
+// Nuevo: Crear Ruta = Mapa con pin y ruta
+const IconCrearRuta = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+    <path d="M8 2 v16 M16 6 v16" strokeWidth="1.2"/>
+    <circle cx="12" cy="11" r="2.5" fill="#FFC727" stroke="#0F305B" strokeWidth="1.2"/>
+    <path d="M12 13.5 L12 16" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+)
+const IconTrash = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6 M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+)
+
+// Datos amigables reales por POI
+const datosAmigables = {
+  "poi_bellas_artes": { direccion: "José Miguel de la Barra 650, Recoleta", desc: "Colección más grande de arte chileno, desde la colonia hasta hoy. Salas con luz natural y esculturas en el hall.", tip: "Entrada liberada, propina voluntaria" },
+  "poi_mac": { direccion: "Parque Forestal s/n, Quinta Normal", desc: "Arte contemporáneo chileno y latinoamericano en edificio neoclásico. Ideal para contrastar con Bellas Artes.", tip: "Martes gratis estudiantes" },
+  "poi_emporio": { direccion: "Parque Forestal 027, Providencia", desc: "Café ícono con helados artesanales y tostadas. Terraza bajo los árboles frente al Museo.", tip: "Pide el helado de rosa" },
+  "poi_mac_forestal": { direccion: "Parque Forestal s/n", desc: "Mismo edificio que Bellas Artes, ala contemporánea.", tip: "" },
+  "poi_santalucia": { direccion: "Santa Lucía 170, Santiago Centro", desc: "Mirador 360° de Santiago, jardines y fuentes. Subida de 10 min, ideal al atardecer.", tip: "Lleva agua, no hay sombra arriba" },
+  "poi_plaza": { direccion: "Plaza de Armas, Santiago Centro", desc: "Kilómetro cero de Chile, rodeada de Catedral y Municipalidad. Punto de encuentro histórico.", tip: "Cuidado con pertenencias" },
+  "poi_moneda": { direccion: "Moneda S/N, Santiago", desc: "Palacio de Gobierno, cambio de guardia días impares 10:00.", tip: "Reserva visita guiada gratis" },
+  "poi_chascona": { direccion: "Fernando Márquez de la Plata 0192, Providencia", desc: "Casa-museo de Pablo Neruda, llena de objetos marinos y amor por Matilde.", tip: "Audio guía incluida" },
+  "poi_gam": { direccion: "Alameda 227, Santiago", desc: "Centro cultural con teatro, expos y ferias. Arquitectura moderna post-2010.", tip: "Entrada liberada" },
+  "default": { direccion: "Santiago, Chile", desc: "Lugar seleccionado según tu tiempo y presupuesto.", tip: "Llega 5 min antes" }
+}
 
 export default function App() {
   const [pantalla, setPantalla] = useState('HOME')
@@ -55,10 +90,14 @@ export default function App() {
   const [audioPlaying, setAudioPlaying] = useState(false)
   const [audioProgress, setAudioProgress] = useState(35)
   const [errorForm, setErrorForm] = useState(null)
-  // Checklist de visita: qué ya se visitó en la ruta actual
   const [visitados, setVisitados] = useState(new Set())
+  // Reseñas: { [poiId]: [{rating, comentario, fecha}] }
+  const [rating, setRating] = useState(0)
+  const [comentario, setComentario] = useState("")
+  const [errorResena, setErrorResena] = useState(null)
+  const [reviews, setReviews] = useState({})
 
-  const { preferencias, setPreferencias, itinerario, generarRuta, guardarRuta, rutaGuardada, cargarPoi, loading } = useRouteStore()
+  const { preferencias, setPreferencias, itinerario, setItinerario, generarRuta, guardarRuta, rutaGuardada, cargarPoi, loading } = useRouteStore()
 
   const categorias = ['Museos', 'Gastronomía', 'Histórico', 'Parques', 'Shopping', 'Vida Nocturna']
   const filtrosRapidos = ['Todos', 'Museos', 'Gastronomía', 'Parques']
@@ -69,10 +108,16 @@ export default function App() {
     return () => clearInterval(id)
   }, [audioPlaying])
 
-  // Reset checklist al generar nueva ruta
   useEffect(() => {
     if (itinerario) setVisitados(new Set())
   }, [itinerario?.titulo])
+
+  // Reset reseña al cambiar de POI
+  useEffect(() => {
+    setRating(0)
+    setComentario("")
+    setErrorResena(null)
+  }, [poiFicha?.id])
 
   const toggleInteres = (cat) => {
     const nuevos = preferencias.intereses.includes(cat) ? preferencias.intereses.filter(c => c !== cat) : [...preferencias.intereses, cat]
@@ -87,6 +132,34 @@ export default function App() {
       else ns.add(id)
       return ns
     })
+  }
+
+  const handleEliminarParada = (id) => {
+    if (!itinerario) return
+    const nuevas = itinerario.paradas.filter(p => p.id !== id)
+    // Recalcula totales simple
+    const costoTotal = nuevas.reduce((s,p)=> s + (p.costo||0), 0)
+    const tiempoTotal = nuevas.reduce((s,p)=> s + (p.tiempoMin||0), 0)
+    setItinerario({
+      ...itinerario,
+      paradas: nuevas,
+      costoTotal: `$${costoTotal.toLocaleString('es-CL')}`,
+      duracionTotal: `${Math.floor(tiempoTotal/60)}h ${String(tiempoTotal%60).padStart(2,'0')}m`,
+      distancia: nuevas.length <=1 ? "—" : `${(nuevas.length*0.6).toFixed(1)} km a pie`
+    })
+    // also remove from visitados
+    setVisitados(prev => { const ns=new Set(prev); ns.delete(id); return ns })
+  }
+
+  const handleEnviarResena = () => {
+    if (rating === 0) { setErrorResena("Elige de 1 a 5 estrellas"); return }
+    if (comentario.trim().length < 10) { setErrorResena("Comentario obligatorio: mínimo 10 caracteres"); return }
+    const nueva = { rating, comentario: comentario.trim(), fecha: new Date().toLocaleDateString('es-CL'), autor: "Tú" }
+    setReviews(prev => ({
+      ...prev,
+      [poiFicha.id]: [...(prev[poiFicha.id]||[]), nueva]
+    }))
+    setRating(0); setComentario(""); setErrorResena(null)
   }
 
   const handleGenerar = async () => {
@@ -115,6 +188,8 @@ export default function App() {
   }
 
   const progreso = itinerario ? Math.round((visitados.size / (itinerario.paradas?.length || 1)) * 100) : 0
+
+  const getDatoAmigable = (id) => datosAmigables[id] || datosAmigables["default"]
 
   return (
     <div className="min-h-screen bg-[#0A2540] flex justify-center py-4 px-2 md:py-6">
@@ -145,10 +220,10 @@ export default function App() {
                 </div>
                 <div className="px-5 mt-3 grid grid-cols-4 gap-2">
                   {[
-                    { label: "Perfil", icon: "👤", go: "PERFIL" },
-                    { label: "Crear Ruta", icon: "✦", go: "FORM" },
-                    { label: "Mis Rutas", icon: "🗺️", go: "MISRUTAS" },
-                    { label: "Ayuda", icon: "?", go: "AYUDA" },
+                    { label: "Perfil", icon: <span className="text-sm">👤</span>, go: "PERFIL" },
+                    { label: "Crear Ruta", icon: <span className="w-8 h-8 rounded-full bg-[#0F305B] text-white grid place-items-center"><IconCrearRuta/></span>, go: "FORM" },
+                    { label: "Mis Rutas", icon: <span className="text-sm">🗺️</span>, go: "MISRUTAS" },
+                    { label: "Ayuda", icon: <span className="text-sm">?</span>, go: "AYUDA" },
                   ].map(b => (
                     <button key={b.label} onClick={() => setPantalla(b.go)} className="bg-white border border-[#E6EEF7] rounded-2xl p-2.5 flex flex-col items-center gap-1 shadow-sm hover:border-[#0F305B] transition">
                       <span className="w-8 h-8 rounded-full bg-[#E6EEF7] grid place-items-center text-sm">{b.icon}</span>
@@ -187,7 +262,10 @@ export default function App() {
                     <p className="text-white/80 text-xs mt-1.5 leading-relaxed relative font-medium">Accede a rutas offline y<br/>descuentos premium en<br/>comercios locales.</p>
                     <button onClick={() => setPantalla('FORM')} className="mt-4 bg-[#FFC727] hover:bg-[#FFB800] text-[#0F305B] px-5 py-2.5 rounded-full text-xs font-extrabold shadow">Mejorar a Premium</button>
                   </div>
-                  <button onClick={() => setPantalla('FORM')} className="mt-3 w-full bg-white border-2 border-[#0F305B] text-[#0F305B] font-extrabold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 shadow-sm">✦ Planifica tu ruta inteligente →</button>
+                  <button onClick={() => setPantalla('FORM')} className="mt-3 w-full bg-white border-2 border-[#0F305B] text-[#0F305B] font-extrabold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <span className="w-6 h-6 rounded-full bg-[#0F305B] text-white grid place-items-center"><IconCrearRuta/></span>
+                    Planifica tu ruta inteligente →
+                  </button>
                   <p className="text-center text-[11px] text-[#5A7896] mt-1.5 font-medium">Dinos tu tiempo y presupuesto. Nosotros armamos lo imposible.</p>
                 </div>
                 <div className="px-5 mt-6">
@@ -226,8 +304,8 @@ export default function App() {
                 <div className="px-5 mt-5">
                   <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
                     <div className="flex items-center gap-3">
-                      <img src="https://i.pravatar.cc/100?img=33" className="w-14 h-14 rounded-full border-2 border-[#E6EEF7]" alt="avatar"/>
-                      <div><p className="font-extrabold text-[#0F305B]">Francisco Carrera</p><p className="text-xs text-[#5A7896]">francisco@santiago.inteligente.cl</p><p className="text-xs text-[#5A7896]">Explorador nivel 3 • 12 rutas completadas</p></div>
+                      <img src="https://i.pravatar.cc/100?img=12" className="w-14 h-14 rounded-full border-2 border-[#E6EEF7]" alt="avatar"/>
+                      <div><p className="font-extrabold text-[#0F305B]">Usuario</p><p className="text-xs text-[#5A7896]">usuario@gmail.com</p><p className="text-xs text-[#5A7896]">Explorador nivel 3 • 12 rutas completadas</p></div>
                     </div>
                     <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
                       <div className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3"><p className="font-bold text-[#0F305B]">Presupuesto favorito</p><p className="text-[#5A7896]">${preferencias.presupuesto.toLocaleString('es-CL')} CLP</p></div>
@@ -248,8 +326,8 @@ export default function App() {
                       <p className="text-xs font-bold text-[#0F305B]">Datos editables</p>
                       <p className="text-xs text-[#5A7896] mt-1">Formulario conectado a la colección de usuarios. Cambios se reflejan en tus preferencias de ruta.</p>
                       <div className="mt-3 space-y-2">
-                        <input placeholder="Nombre" defaultValue="Francisco Carrera" className="w-full bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2.5 text-sm font-medium text-[#0F305B] outline-none focus:border-[#0F305B]" />
-                        <input placeholder="Correo" defaultValue="francisco@santiago.inteligente.cl" className="w-full bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2.5 text-sm font-medium text-[#0F305B] outline-none focus:border-[#0F305B]" />
+                        <input placeholder="Nombre" defaultValue="Usuario" className="w-full bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2.5 text-sm font-medium text-[#0F305B] outline-none focus:border-[#0F305B]" />
+                        <input placeholder="Correo" defaultValue="usuario@gmail.com" className="w-full bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2.5 text-sm font-medium text-[#0F305B] outline-none focus:border-[#0F305B]" />
                       </div>
                     </div>
                   )}
@@ -317,7 +395,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {/* RUTA SUGERIDA - con CHECKLIST */}
+            {/* RUTA SUGERIDA - con CHECKLIST + ELIMINAR */}
             {pantalla==='RUTA' && (
               <motion.div key="ruta" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="pb-28 bg-[#F8FAFC]">
                 <div className="relative h-[264px] w-full overflow-hidden">
@@ -335,7 +413,6 @@ export default function App() {
                     <p className="text-white/95 text-xs mt-1.5 flex items-center gap-1.5 font-medium"><span className="flex items-center gap-1"><IconClock /> {itinerario?.horario || "Mar-Dom 10:00-18:30"}</span><span>•</span><span>{itinerario?.precioEntrada || "$3.000 General"}</span></p>
                   </div>
                 </div>
-                {/* CHECKLIST PROGRESO - relacionado al proyecto: qué ya visitaste */}
                 <div className="px-5 mt-4">
                   <div className="bg-white border border-[#E6EEF7] rounded-2xl p-4 shadow-sm">
                     <div className="flex items-center justify-between">
@@ -373,7 +450,7 @@ export default function App() {
                 </div>
                 <div className="px-5 mt-6">
                   <h3 className="font-extrabold text-[#0F305B]">Tu itinerario</h3>
-                  <p className="text-xs text-[#5A7896] mt-1 font-medium">Toca el checkbox al visitar cada lugar. Se guarda en tu checklist.</p>
+                  <p className="text-xs text-[#5A7896] mt-1 font-medium">Toca el checkbox al visitar y ❌ para quitar lugares que no te interesen.</p>
                   <div className="mt-4 space-y-3">
                     {(itinerario?.paradas || []).map((p,i)=> {
                       const hecho = visitados.has(p.id)
@@ -386,23 +463,31 @@ export default function App() {
                             </label>
                             {i < (itinerario?.paradas?.length-1) && <div className={`w-0.5 flex-1 mt-1 ${hecho ? 'bg-emerald-200' : 'bg-[#E6EEF7]'}`} style={{ minHeight: 32 }}/>}
                           </div>
-                          <button onClick={()=> abrirFichaPoi(p)} className={`flex-1 border rounded-2xl p-3 flex gap-3 shadow-sm text-left transition ${hecho ? 'bg-emerald-50 border-emerald-200' : 'bg-white border-[#E6EEF7] hover:border-[#0F305B]'}`}>
-                            <img src={p.imagen} alt={p.nombre} onError={(e)=>{ if(p.fallback && e.currentTarget.src!==p.fallback) e.currentTarget.src=p.fallback }} className={`w-16 h-16 rounded-xl object-cover border ${hecho ? 'border-emerald-200 opacity-70' : 'border-[#E6EEF7]'}`} />
-                            <div className="flex-1 min-w-0">
-                              <p className={`text-sm font-extrabold leading-tight truncate ${hecho ? 'text-emerald-700 line-through' : 'text-[#0F305B]'}`}>{p.nombre}</p>
-                              <p className="text-xs text-[#5A7896] mt-0.5 font-medium">{p.hora} • {p.tiempoMin} min</p>
-                              <div className="flex items-center gap-2 mt-1.5">
-                                <span className={`text-xs font-bold border px-2 py-0.5 rounded-full ${hecho ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-[#E6EEF7] text-[#0F305B] border-[#D6E3F3]'}`}>{hecho ? 'Visitado' : p.costoLabel}</span>
-                                <span className="text-xs text-[#5A7896]">{hecho ? '¡Hecho!' : p.distanciaSig}</span>
+                          <div className={`flex-1 border rounded-2xl p-3 flex gap-3 shadow-sm text-left transition relative ${hecho ? 'bg-emerald-50 border-emerald-200' : 'bg-white border-[#E6EEF7] hover:border-[#0F305B]'}`}>
+                            <button onClick={()=> abrirFichaPoi(p)} className="flex gap-3 flex-1 text-left">
+                              <img src={p.imagen} alt={p.nombre} onError={(e)=>{ if(p.fallback && e.currentTarget.src!==p.fallback) e.currentTarget.src=p.fallback }} className={`w-16 h-16 rounded-xl object-cover border flex-shrink-0 ${hecho ? 'border-emerald-200 opacity-70' : 'border-[#E6EEF7]'}`} />
+                              <div className="flex-1 min-w-0">
+                                <p className={`text-sm font-extrabold leading-tight truncate ${hecho ? 'text-emerald-700 line-through' : 'text-[#0F305B]'}`}>{p.nombre}</p>
+                                <p className="text-xs text-[#5A7896] mt-0.5 font-medium">{p.hora} • {p.tiempoMin} min</p>
+                                <div className="flex items-center gap-2 mt-1.5">
+                                  <span className={`text-xs font-bold border px-2 py-0.5 rounded-full ${hecho ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-[#E6EEF7] text-[#0F305B] border-[#D6E3F3]'}`}>{hecho ? 'Visitado' : p.costoLabel}</span>
+                                  <span className="text-xs text-[#5A7896]">{hecho ? '¡Hecho!' : p.distanciaSig}</span>
+                                </div>
                               </div>
-                            </div>
-                            <span className="text-[#0F305B] text-xs font-bold">›</span>
-                          </button>
+                            </button>
+                            <button onClick={()=> handleEliminarParada(p.id)} className="w-8 h-8 rounded-full bg-white border border-[#FECACA] text-red-500 hover:bg-red-50 grid place-items-center flex-shrink-0 self-center" title="Quitar de la ruta">
+                              <IconTrash/>
+                            </button>
+                            <button onClick={()=> abrirFichaPoi(p)} className="absolute -right-1 top-1/2 -translate-y-1/2 w-6 h-6 hidden">›</button>
+                          </div>
                         </div>
                       )
                     })}
-                    {(!itinerario || itinerario.paradas.length===0) && <p className="text-xs text-[#5A7896] bg-white border border-dashed border-[#E6EEF7] rounded-xl p-4 text-center">Sin lugares viables para ese presupuesto/tiempo. Ajusta tus preferencias.</p>}
+                    {(!itinerario || itinerario.paradas.length===0) && <p className="text-xs text-[#5A7896] bg-white border border-dashed border-[#E6EEF7] rounded-xl p-4 text-center">Sin lugares. Genera otra ruta o ajusta tu presupuesto/tiempo.</p>}
                   </div>
+                  {itinerario?.paradas?.length > 1 && (
+                    <button onClick={()=> setItinerario({...itinerario, paradas: []})} className="mt-3 w-full text-xs font-bold text-red-500 hover:text-red-600">Vaciar itinerario</button>
+                  )}
                 </div>
                 <div className="px-5 mt-6 flex gap-3">
                   <button onClick={()=> setPantalla('FORM')} className="flex-1 bg-white border border-[#E6EEF7] font-extrabold py-3.5 rounded-full text-sm text-[#0F305B]">← Ajustar ruta</button>
@@ -444,7 +529,6 @@ export default function App() {
                             <button onClick={()=> setPantalla('RUTA')} className="flex-1 bg-white border border-[#E6EEF7] font-bold py-2 rounded-full text-sm text-[#0F305B]">Ver itinerario</button>
                             <button onClick={()=> abrirFichaPoi(rutaGuardada.paradas[0])} className="flex-1 bg-[#FFC727] font-extrabold py-2 rounded-full text-sm text-[#0F305B]">Ver detalle</button>
                           </div>
-                          {/* checklist resumen */}
                           <div className="mt-4 bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3">
                             <p className="text-xs font-extrabold text-[#0F305B]">Checklist de esta ruta</p>
                             <div className="mt-2 space-y-1.5">
@@ -465,7 +549,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {/* FICHA POI */}
+            {/* FICHA POI - con datos amigables y reseña */}
             {pantalla==='POI' && poiFicha && (
               <motion.div key="poi" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="pb-28 bg-[#F8FAFC]">
                 <div className="relative h-56 w-full overflow-hidden">
@@ -484,18 +568,72 @@ export default function App() {
                     <p className="text-white/90 text-xs mt-1">{poiFicha.horario} • {poiFicha.costoLabel}</p>
                   </div>
                 </div>
-                <div className="px-5 mt-5">
+                <div className="px-5 mt-5 space-y-4">
+                  {/* Datos amigables reales */}
                   <div className="bg-white border border-[#E6EEF7] rounded-2xl p-4 shadow-sm">
-                    <h3 className="font-extrabold text-[#0F305B]">Detalle del lugar</h3>
-                    <p className="text-xs text-[#5A7896] mt-1">Información completa y estado de tu visita</p>
-                    <div className="mt-3 space-y-2 text-sm">
-                      <div className="flex justify-between bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2"><span className="font-bold text-[#0F305B]">Tiempo sugerido</span><span className="text-[#5A7896]">{poiFicha.tiempoMin} min</span></div>
-                      <div className="flex justify-between bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2"><span className="font-bold text-[#0F305B]">Estado</span><span className={`font-bold ${visitados.has(poiFicha.id) ? 'text-emerald-600' : 'text-amber-600'}`}>{visitados.has(poiFicha.id) ? '✓ Visitado' : 'Pendiente'}</span></div>
-                      <div className="flex justify-between bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2"><span className="font-bold text-[#0F305B]">Ubicación</span><span className="text-[#5A7896] font-mono text-xs">{poiFicha.coords?.join(', ')}</span></div>
-                      {poiFicha.meta && <div className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3"><p className="text-xs font-bold text-[#0F305B]">Datos del lugar:</p><pre className="text-xs text-[#5A7896] mt-1 whitespace-pre-wrap break-words">{JSON.stringify(poiFicha.meta, null, 2)}</pre></div>}
+                    <h3 className="font-extrabold text-[#0F305B]">Sobre este lugar</h3>
+                    <p className="text-sm text-[#3A5A7A] mt-2 leading-relaxed">{getDatoAmigable(poiFicha.id).desc}</p>
+                    <div className="mt-4 grid gap-2">
+                      <div className="flex items-start gap-3 bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3">
+                        <span className="w-8 h-8 rounded-full bg-white border border-[#E6EEF7] grid place-items-center text-sm flex-shrink-0">📍</span>
+                        <div><p className="text-xs font-extrabold text-[#0F305B]">Dirección</p><p className="text-xs text-[#5A7896] mt-0.5">{getDatoAmigable(poiFicha.id).direccion}</p></div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3 text-center">
+                          <p className="text-xs font-bold text-[#5A7896]">Horario</p><p className="text-xs font-extrabold text-[#0F305B] mt-1">{poiFicha.horario}</p>
+                        </div>
+                        <div className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3 text-center">
+                          <p className="text-xs font-bold text-[#5A7896]">Duración</p><p className="text-xs font-extrabold text-[#0F305B] mt-1">{poiFicha.tiempoMin} min</p>
+                        </div>
+                        <div className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3 text-center">
+                          <p className="text-xs font-bold text-[#5A7896]">Entrada</p><p className="text-xs font-extrabold text-[#0F305B] mt-1">{poiFicha.costoLabel}</p>
+                        </div>
+                      </div>
+                      <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-xl p-3 flex gap-2">
+                        <span className="text-sm">💡</span>
+                        <p className="text-xs text-[#92400E] font-medium">{getDatoAmigable(poiFicha.id).tip}</p>
+                      </div>
+                      <div className="flex items-center justify-between bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2">
+                        <span className="text-xs font-bold text-[#0F305B]">Estado de visita</span>
+                        <span className={`text-xs font-extrabold px-2.5 py-1 rounded-full border ${visitados.has(poiFicha.id) ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>{visitados.has(poiFicha.id) ? '✓ Visitado' : 'Pendiente'}</span>
+                      </div>
                     </div>
-                    <button onClick={()=> setPantalla('HOME')} className="mt-4 w-full bg-[#0F305B] text-white font-extrabold py-3 rounded-full text-sm">Volver al inicio</button>
                   </div>
+
+                  {/* Reseña con estrellas */}
+                  <div className="bg-white border border-[#E6EEF7] rounded-2xl p-4 shadow-sm">
+                    <h3 className="font-extrabold text-[#0F305B]">Deja tu reseña</h3>
+                    <p className="text-xs text-[#5A7896] mt-1">Califica y comenta — ambos obligatorios</p>
+                    <div className="mt-3 flex gap-1">
+                      {[1,2,3,4,5].map(n=> (
+                        <button key={n} onClick={()=> { setRating(n); setErrorResena(null)}} className={`w-10 h-10 rounded-full grid place-items-center border-2 transition ${rating>=n ? 'bg-[#FFC727] border-[#FFC727] text-[#0F305B]' : 'bg-white border-[#E6EEF7] text-[#CBD5E1] hover:border-[#FFC727]'}`}>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill={rating>=n ? "#0F305B" : "none"} stroke="currentColor" strokeWidth="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </button>
+                      ))}
+                      <span className="ml-2 text-sm font-bold text-[#0F305B] self-center">{rating>0 ? `${rating}/5` : "Elige"}</span>
+                    </div>
+                    <textarea value={comentario} onChange={e=> { setComentario(e.target.value); setErrorResena(null)}} placeholder="¿Qué te pareció? Cuéntanos tu experiencia (mín. 10 caracteres)" rows={3} className="mt-3 w-full bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl px-3 py-2.5 text-sm text-[#0F305B] placeholder:text-[#8AA0B8] outline-none focus:border-[#0F305B] resize-none" />
+                    {errorResena && <p className="text-xs text-red-600 font-bold mt-2">⚠ {errorResena}</p>}
+                    <button onClick={handleEnviarResena} className="mt-3 w-full bg-[#0F305B] text-white font-extrabold py-2.5 rounded-full text-sm hover:bg-[#0A2540] transition">Enviar reseña</button>
+                    {/* Lista reseñas */}
+                    {(reviews[poiFicha.id]||[]).length > 0 && (
+                      <div className="mt-4 space-y-2">
+                        <p className="text-xs font-extrabold text-[#0F305B]">Reseñas ({reviews[poiFicha.id].length})</p>
+                        {reviews[poiFicha.id].map((r,i)=> (
+                          <div key={i} className="bg-[#F8FAFC] border border-[#E6EEF7] rounded-xl p-3">
+                            <div className="flex items-center gap-1">
+                              {[1,2,3,4,5].map(s=> <span key={s} className={s<=r.rating ? "text-[#FFC727]" : "text-[#E6EEF7]"}>★</span>)}
+                              <span className="text-xs text-[#8AA0B8] ml-2">{r.fecha}</span>
+                              <span className="text-xs font-bold text-[#0F305B] ml-auto">{r.autor}</span>
+                            </div>
+                            <p className="text-sm text-[#3A5A7A] mt-1 leading-relaxed">{r.comentario}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <button onClick={()=> setPantalla('HOME')} className="w-full bg-[#0F305B] text-white font-extrabold py-3 rounded-full text-sm">Volver al inicio</button>
                 </div>
               </motion.div>
             )}
@@ -526,19 +664,19 @@ export default function App() {
           </AnimatePresence>
         </div>
 
-        {/* NAVBAR */}
+        {/* NAVBAR - simbología mejorada */}
         <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-[#E6EEF7] px-6 pt-2 pb-4 rounded-t-3xl shadow-[0_-8px_24px_rgba(15,48,91,0.08)]">
           <div className="flex items-center justify-between">
             {[
-              { id: 'HOME', label: 'Explorar', icon: '⌖', go: 'HOME' },
-              { id: 'FORM', label: 'Crear Ruta', icon: '✦', go: 'FORM' },
-              { id: 'MISRUTAS', label: 'Mis Rutas', icon: '🗺️', go: 'MISRUTAS' },
-              { id: 'PERFIL', label: 'Perfil', icon: '👤', go: 'PERFIL' },
+              { id: 'HOME', label: 'Explorar', icon: <IconExplorar/>, go: 'HOME' },
+              { id: 'FORM', label: 'Crear Ruta', icon: <IconCrearRuta/>, go: 'FORM' },
+              { id: 'MISRUTAS', label: 'Mis Rutas', icon: <span className="text-lg">🗺️</span>, go: 'MISRUTAS' },
+              { id: 'PERFIL', label: 'Perfil', icon: <span className="text-lg">👤</span>, go: 'PERFIL' },
             ].map(item => {
               const active = (pantalla==='HOME' && item.id==='HOME') || (pantalla==='FORM' && item.id==='FORM') || (pantalla==='RUTA' && item.id==='FORM') || ((pantalla==='MISRUTAS' || pantalla==='GUARDADA') && item.id==='MISRUTAS') || ((pantalla==='PERFIL' || pantalla==='DATOS') && item.id==='PERFIL')
               return (
                 <button key={item.id} onClick={()=> setPantalla(item.go)} className={`flex flex-col items-center gap-1 min-w-[64px] ${active ? 'text-[#0F305B]' : 'text-[#8AA0B8]'}`}>
-                  <span className={`text-lg w-7 h-7 grid place-items-center rounded-full ${active ? 'bg-[#E6EEF7]' : ''}`}>{item.icon}</span>
+                  <span className={`w-7 h-7 grid place-items-center rounded-full ${active ? 'bg-[#E6EEF7]' : ''}`}>{item.icon}</span>
                   <span className="text-[11px] font-extrabold leading-none">{item.label}</span>
                 </button>
               )
