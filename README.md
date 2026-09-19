@@ -25,7 +25,7 @@
 
 ## 🔗 Enlace al prototipo web
 
-* **Prototipo navegable (deploy):** [https://santiago-inteligente.vercel.app](#) *(placeholder — reemplazar al deployar en Vercel/Netlify)*
+* **Prototipo navegable (deploy):** [https://santiago-inteligenteprototipo.netlify.app](#) *(placeholder — reemplazar al deployar en Vercel/Netlify)*
 * **Prototipo local:** `npm run dev` → http://localhost:5173
 
 ## 📄 Enlaces a los documentos
