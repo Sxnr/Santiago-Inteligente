@@ -9,8 +9,9 @@ flowchart TD
 
     ARMAR --> P1["N2 — Paso 1<br/>¿Cuánto tiempo tienes?"]
     P1 --> P2["N2 — Paso 2<br/>¿Cuánto quieres gastar?"]
-    P2 --> P3["N2 — Paso 3<br/>Tu ruta sugerida"]
-    P3 --> LUGAR["<b>N3 — Detalle del lugar</b>"]
+    P2 --> P3["N2 — Paso 3<br/>¿Cuáles son tus intereses?"]
+    P3 --> P4["N2 — Paso 4<br/>Tu ruta sugerida"]
+    P4 --> LUGAR["<b>N3 — Detalle del lugar</b>"]
 
     MISRUTAS --> RUTAGUARDADA["N2 — Detalle de ruta guardada"]
     RUTAGUARDADA --> LUGAR
