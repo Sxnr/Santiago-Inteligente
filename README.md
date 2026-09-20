@@ -25,7 +25,7 @@
 
 ## 🔗 Enlace al prototipo web
 
-* **Prototipo navegable (deploy):** [https://santiago-inteligenteprototipo.netlify.app](#) *(placeholder — reemplazar al deployar en Vercel/Netlify)*
+* **Prototipo navegable (deploy):** https://santiago-inteligenteprototipo.netlify.app
 * **Prototipo local:** `npm run dev` → http://localhost:5173
 
 ## 📄 Enlaces a los documentos
@@ -34,9 +34,9 @@
 
 * [Propuesta Comercial (PDF)](./docs/hito-1/propuesta.pdf)
 * [Láminas de Presentación (PDF)](./docs/hito-1/presentacion.pdf)
-* [Diagrama Arquitectura Técnica (PNG)](./docs/hito-1/arquitectura.png)
-* [Diagrama Arquitectura Información](./Arquitectura_Informacion.md)
-* [Diagrama Arquitectura Técnica (Mermaid)](./Arquitectura_tecnica.md)
+* [Diagrama Arquitectura Técnica (PNG)](./docs/hito-1/arquitectura-tecnica.png)
+* [Diagrama Arquitectura Información](./docs/hito-1/Arquitectura_Informacion.md)
+* [Diagrama Arquitectura Técnica (Mermaid)](./docs/hito-1/Arquitectura_tecnica.md)
 * **Video demostrativo:** [Enlace a video (YouTube/Drive)](#) *(agregar URL)*
 
 ---
