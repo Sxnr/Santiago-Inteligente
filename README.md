@@ -34,7 +34,7 @@
 
 * [Propuesta Comercial (PDF)](./docs/hito-1/propuesta.pdf)
 * [Láminas de Presentación (PDF)](./docs/hito-1/presentacion.pdf)
-* [Diagrama Arquitectura Técnica (PNG)](./docs/hito-1/arquitectura-tecnica.png)
+* [Diagrama Arquitectura Técnica (PNG)](./docs/hito-1/Arquitectura-tecnica.png)
 * [Diagrama Arquitectura Información (PNG)](./docs/hito-1/Arquitectura_Informacion.md)
 
 ---
