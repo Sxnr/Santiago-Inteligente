@@ -1,39 +1,63 @@
-import { poisRepository } from './repository.js'
+import { sugerirRuta } from './routeService.js'
 
-// Capa Servidor: Motor de Filtrado (Controller)
-// Controller recibe datos mapeados del Repo y arma Itinerario hiper-local
+// controller.js — CAPA DE PRESENTACIÓN (delgado)
+// Traduce HTTP ↔ negocio. NO contiene reglas de la ruta.
 export async function motorDeFiltrado({ tiempo, presupuesto, intereses }) {
-  // Repo -> Controller: datos brutos + mapeo
-  const { datosBrutos, meta } = await poisRepository.findByFiltros({ tiempo, presupuesto, intereses })
+  // Delega toda la lógica a la capa de negocio
+  const { duracionTotalMin, costoTotalClp, paradas: paradasServicio, mensaje } = await sugerirRuta({ tiempo, presupuesto, intereses })
 
-  // Controller arma itinerario optimizado a pie (2.4km ejemplo)
-  const paradas = datosBrutos.map((poi, i) => {
-    const startMin = 10 * 60 + 30 + i * 65 // 10:30 base + offset
-    const endMin = startMin + poi.tiempoMin
-    const fmt = (m) => `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`
+  if (paradasServicio.length === 0) {
     return {
-      ...poi,
-      orden: i + 1,
+      titulo: "Sin resultados",
+      duracionTotal: "0h 00m",
+      distancia: "—",
+      costoTotal: "$0",
+      horario: "—",
+      precioEntrada: "—",
+      paradas: [],
+      meta: { costoTotal: 0, tiempoTotalMin: 0, viable: false, mensaje },
+      trace: ["UI", "State", "HTTP POST /api/rutas/sugerir", "Router", "Zod", "Controller", "routeService", "Repo.buscarCandidatos", "CollPOI"]
+    }
+  }
+
+  // Enriquecimiento para el prototipo: horas y distancia legible
+  const paradas = paradasServicio.map((p, i) => {
+    const startMin = 10 * 60 + 30 + i * 65
+    const endMin = startMin + p.duracionMin
+    const fmt = (m) => `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`
+    const poi = p._poi
+    return {
+      id: poi.id,
+      nombre: poi.nombre,
+      categoria: poi.categoria,
+      costo: poi.costo,
+      costoLabel: poi.costo === 0 ? "$0 (Gratis)" : `$${poi.costo.toLocaleString('es-CL')}`,
+      tiempoMin: poi.tiempoMin,
+      duracionMin: p.duracionMin,
+      trasladoMin: p.trasladoMin,
+      trasladoLabel: p.trasladoMin > 0 ? `${p.trasladoMin} min traslado` : "Inicio",
       hora: `${fmt(startMin)} - ${fmt(endMin)}`,
-      distanciaSig: i < datosBrutos.length - 1 ? "320m a pie" : "fin",
+      distanciaSig: i < paradasServicio.length - 1 ? `${p.trasladoMin > 0 ? p.trasladoMin*80 : 320}m a pie` : "fin",
+      imagen: poi.imagen,
+      coords: poi.coords,
+      horario: poi.horario,
+      meta: poi.meta,
+      orden: p.orden,
     }
   })
 
-  const duracionHoras = (meta.tiempoTotalMin / 60).toFixed(1)
   const itinerario = {
     titulo: intereses.includes("Museos") ? "Ruta Bellas Artes & Forestal" : "Ruta Hiper-Local Optimizada",
-    duracionTotal: `${Math.floor(meta.tiempoTotalMin/60)}h ${(meta.tiempoTotalMin%60).toString().padStart(2,'0')}m`,
-    distancia: "2.4 km a pie",
-    costoTotal: `$${meta.costoTotal.toLocaleString('es-CL')}`,
+    duracionTotal: `${Math.floor(duracionTotalMin/60)}h ${String(duracionTotalMin%60).padStart(2,'0')}m`,
+    distancia: `${(paradas.length * 0.6).toFixed(1)} km a pie`,
+    costoTotal: `$${costoTotalClp.toLocaleString('es-CL')}`,
     horario: "Mar-Dom 10:00-18:30",
     precioEntrada: "$3.000 General / $1.500 Estudiantes",
     paradas,
-    meta: { ...meta, duracionHoras, viable: paradas.length > 0 },
-    // Para debug técnico: traza del flujo sin Nginx
-    trace: ["UI", "State", "HTTP POST /api/rutas/sugerir", "Router", "Zod", "Controller", "Repo", "ODM.find", "CollPOI"]
+    meta: { costoTotal: costoTotalClp, tiempoTotalMin: duracionTotalMin, viable: true },
+    trace: ["UI", "State", "HTTP POST /api/rutas/sugerir", "Router", "Zod", "Controller", "routeService", "Repo.buscarCandidatos", "CollPOI"]
   }
 
-  // Simula Controller -> Router: arma respuesta
-  await new Promise(r => setTimeout(r, 150))
+  await new Promise(r => setTimeout(r, 120))
   return itinerario
 }

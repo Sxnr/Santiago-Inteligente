@@ -3,6 +3,20 @@ import { poisCollection } from '../data/poisCollection.js'
 // Capa Servidor: Repositorio de POIs (Abstracción de BD) + ODM (Mongoose simulado)
 // Repo -> ODM -> CollPOI
 export const poisRepository = {
+  // Nuevo: usado por routeService.js — solo filtra, no elige (cohesión)
+  async buscarCandidatos({ intereses, presupuesto, duracionMaxMin }) {
+    // Filtra por intereses y por límites individuales (no acumulado)
+    const candidatos = poisCollection.filter(p =>
+      intereses.includes(p.categoria) &&
+      p.costo <= presupuesto &&
+      p.tiempoMin <= duracionMaxMin
+    )
+    await new Promise(r => setTimeout(r, 80))
+    // Retorna tal cual viene de BD (sin mapear), el servicio decide
+    return candidatos
+  },
+
+  // Legacy usado por borrador anterior — se mantiene por compatibilidad
   // Simula Mongoose ODM find(filtros)
   async findByFiltros({ intereses, presupuesto, tiempo }) {
     // ODM: find(filtros) => CollPOI
