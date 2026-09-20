@@ -16,12 +16,12 @@ export const poisCollection = [
   {
     id: "poi_mac",
     categoria: "Museos",
-    nombre: "Museo de Arte Contemporáneo (MAC Forestal)",
+    nombre: "Museo de Arte Contemporáneo",
     costo: 1000,
     tiempoMin: 50,
     horario: "Mar-Dom 11:00-17:30",
     coords: [-33.436, -70.643],
-    imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Museo%20de%20Arte%20Contemporaneo%20Forestal.jpg?width=400",
+    imagen: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=400&auto=format&fit=crop",
     meta: { tipo: "museo", universidad: "U. de Chile" }
   },
   // Esquema Gastronomía (variable: incluye menú)

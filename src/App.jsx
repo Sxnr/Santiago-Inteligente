@@ -207,9 +207,7 @@ export default function App() {
                       <p className="text-[10px] tracking-[0.14em] text-[#5A7896] font-bold uppercase mt-0.5">Explorador Urbano</p>
                     </div>
                   </div>
-                  <button onClick={() => setPantalla('AYUDA')} className="w-10 h-10 rounded-full bg-white border border-[#E6EEF7] grid place-items-center shadow-sm text-[#0F305B] relative">
-                    <IconBell /><span className="absolute -top-1 -right-1 w-5 h-5 bg-[#FFC727] rounded-full text-[#0F305B] text-[11px] grid place-items-center font-extrabold border-2 border-white">3</span>
-                  </button>
+                  <button onClick={() => setPantalla('AYUDA')} className="w-10 h-10 rounded-full bg-white border border-[#E6EEF7] grid place-items-center shadow-sm text-[#0F305B] font-extrabold text-lg" title="Ayuda">?</button>
                 </div>
                 <div className="px-5 mt-4">
                   <div className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border border-[#E6EEF7] shadow-sm">
@@ -218,32 +216,28 @@ export default function App() {
                     <span className="w-8 h-8 rounded-full bg-[#F1F5F9] grid place-items-center border border-[#E6EEF7] text-[#0F305B] text-sm">⚙</span>
                   </div>
                 </div>
-                <div className="px-5 mt-3 grid grid-cols-4 gap-2">
-                  {[
-                    { label: "Perfil", icon: <span className="text-sm">👤</span>, go: "PERFIL" },
-                    { label: "Crear Ruta", icon: <span className="w-8 h-8 rounded-full bg-[#0F305B] text-white grid place-items-center"><IconCrearRuta/></span>, go: "FORM" },
-                    { label: "Mis Rutas", icon: <span className="text-sm">🗺️</span>, go: "MISRUTAS" },
-                    { label: "Ayuda", icon: <span className="text-sm">?</span>, go: "AYUDA" },
-                  ].map(b => (
-                    <button key={b.label} onClick={() => setPantalla(b.go)} className="bg-white border border-[#E6EEF7] rounded-2xl p-2.5 flex flex-col items-center gap-1 shadow-sm hover:border-[#0F305B] transition">
-                      <span className="w-8 h-8 rounded-full bg-[#E6EEF7] grid place-items-center text-sm">{b.icon}</span>
-                      <span className="text-[11px] font-extrabold text-[#0F305B] text-center leading-none">{b.label}</span>
-                    </button>
-                  ))}
-                </div>
+
                 <div className="mt-4 flex gap-2 overflow-x-auto no-scrollbar px-5 pb-1">
                   {filtrosRapidos.map(f => (
                     <button key={f} onClick={() => setFiltroActivo(f)} className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-bold border transition flex items-center gap-1.5 ${filtroActivo===f ? 'bg-[#0F305B] text-white border-[#0F305B] shadow' : 'bg-white border-[#E6EEF7] text-[#3A5A7A]'}`}>{f==='Museos' && <span>🏛️</span>} {f}</button>
                   ))}
                 </div>
+                {/* BOTÓN PRINCIPAL - azul, bien visible, arriba */}
+                <div className="px-5 mt-5">
+                  <button onClick={() => setPantalla('FORM')} className="w-full bg-[#0F305B] hover:bg-[#0A2540] text-white font-extrabold py-4 rounded-full shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <span className="w-7 h-7 rounded-full bg-white/20 grid place-items-center"><IconCrearRuta/></span>
+                    Planifica tu ruta inteligente →
+                  </button>
+                  <p className="text-center text-xs text-[#5A7896] mt-2 font-medium">Dinos tu tiempo y presupuesto. Nosotros armamos lo imposible.</p>
+                </div>
                 <div className="px-5 mt-5">
                   <div className="flex items-center justify-between">
                     <h3 className="font-extrabold text-[#0F305B] text-[16px]">Rutas Populares</h3>
-                    <button onClick={() => setPantalla('RUTA')} className="text-sm font-bold text-[#5A7896]">Ver todas</button>
+                    <span className="text-sm font-bold text-[#8AA0B8]">Ver todas</span>
                   </div>
                   <div className="mt-3 space-y-4">
                     {rutasPopularesUI.slice(0,1).map(ruta => (
-                      <motion.div key={ruta.id} whileTap={{ scale: 0.98 }} onClick={() => { setPantalla('RUTA'); if(!itinerario) generarRuta() }} className="rounded-[20px] overflow-hidden border border-[#E6EEF7] bg-white shadow-sm cursor-pointer group">
+                      <div key={ruta.id} className="rounded-[20px] overflow-hidden border border-[#E6EEF7] bg-white shadow-sm group">
                         <div className="relative h-44">
                           <img src={ruta.imagen} alt={ruta.titulo} onError={(e)=>{ if(e.currentTarget.src!==ruta.fallback) e.currentTarget.src=ruta.fallback }} className="w-full h-full object-cover" />
                           <div className="absolute top-3 left-3 bg-white px-2.5 py-1 rounded-full flex items-center gap-1 text-xs font-extrabold shadow text-[#0F305B]"><IconStar /> 4.8</div>
@@ -252,7 +246,7 @@ export default function App() {
                           <h4 className="font-extrabold text-[#0F305B] text-[15px] leading-none">{ruta.titulo}</h4>
                           <div className="flex items-center gap-1.5 text-[#5A7896] text-xs mt-1.5 font-semibold"><IconClock /> {ruta.duracion}</div>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -260,13 +254,9 @@ export default function App() {
                   <div className="rounded-[20px] bg-[#0F305B] p-5 text-white relative overflow-hidden border border-[#1A3A5A]">
                     <h3 className="font-extrabold text-white text-[16px] leading-tight relative">Desbloquea Guías<br/>Exclusivas</h3>
                     <p className="text-white/80 text-xs mt-1.5 leading-relaxed relative font-medium">Accede a rutas offline y<br/>descuentos premium en<br/>comercios locales.</p>
-                    <button onClick={() => setPantalla('FORM')} className="mt-4 bg-[#FFC727] hover:bg-[#FFB800] text-[#0F305B] px-5 py-2.5 rounded-full text-xs font-extrabold shadow">Mejorar a Premium</button>
+                    <button className="mt-4 bg-[#FFC727] text-[#0F305B] px-5 py-2.5 rounded-full text-xs font-extrabold shadow opacity-80 cursor-default">Mejorar a Premium</button>
                   </div>
-                  <button onClick={() => setPantalla('FORM')} className="mt-3 w-full bg-white border-2 border-[#0F305B] text-[#0F305B] font-extrabold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 shadow-sm">
-                    <span className="w-6 h-6 rounded-full bg-[#0F305B] text-white grid place-items-center"><IconCrearRuta/></span>
-                    Planifica tu ruta inteligente →
-                  </button>
-                  <p className="text-center text-[11px] text-[#5A7896] mt-1.5 font-medium">Dinos tu tiempo y presupuesto. Nosotros armamos lo imposible.</p>
+
                 </div>
                 <div className="px-5 mt-6">
                   <h3 className="font-extrabold text-[#0F305B] text-[15px]">Descubre el Barrio Lastarria</h3>
@@ -283,7 +273,7 @@ export default function App() {
                           </div>
                           <div className="mt-3 flex items-center justify-between text-white">
                             <span className="text-sm font-extrabold">Lastarria: Arte & Cultura</span>
-                            <button onClick={() => setPantalla('RUTA')} className="w-8 h-8 rounded-full bg-[#FFC727] text-[#0F305B] grid place-items-center font-bold shadow">→</button>
+                            <span className="w-8 h-8 rounded-full bg-[#E6EEF7] text-[#8AA0B8] grid place-items-center font-bold">→</span>
                           </div>
                         </div>
                       </div>
@@ -335,59 +325,62 @@ export default function App() {
               </motion.div>
             )}
 
-            {/* FORMULARIO */}
+            {/* FORMULARIO - con botón central fijo sin necesidad de scroll */}
             {pantalla==='FORM' && (
-              <motion.div key="form" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }} className="pb-28 bg-[#F8FAFC]">
-                <div className="bg-white border-b border-[#E6EEF7] px-5 pt-6 pb-4">
-                  <button onClick={()=> setPantalla('HOME')} className="text-xs font-bold text-[#0F305B]">‹ Volver</button>
-                  <h1 className="text-lg font-extrabold text-[#0F305B] mt-1">Planifica tu ruta</h1>
-                  <p className="text-sm text-[#5A7896] font-medium">Ajusta tus restricciones. Te mostramos solo lo viable.</p>
-                </div>
-                <div className="px-5 mt-5">
-                  <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-extrabold text-[#0F305B] flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-[#E6EEF7] grid place-items-center text-sm border border-[#D6E3F3]">⏱</span> Tiempo disponible</h3>
-                      <span className="bg-[#0F305B] text-white text-sm font-extrabold px-3 py-1.5 rounded-full">{preferencias.tiempo}h</span>
-                    </div>
-                    <input type="range" min="1" max="8" step="0.5" value={preferencias.tiempo} onChange={e=> setPreferencias({ ...preferencias, tiempo: parseFloat(e.target.value)})} className="w-full mt-5" />
-                    <div className="flex justify-between text-xs text-[#5A7896] mt-1 font-bold"><span>1h</span><span>4h</span><span>8h</span></div>
+              <motion.div key="form" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }} className="flex flex-col h-[calc(100%-0px)] bg-[#F8FAFC]">
+                <div className="flex-1 overflow-y-auto pb-2">
+                  <div className="bg-white border-b border-[#E6EEF7] px-5 pt-6 pb-4">
+                    <button onClick={()=> setPantalla('HOME')} className="text-xs font-bold text-[#0F305B]">‹ Volver</button>
+                    <h1 className="text-lg font-extrabold text-[#0F305B] mt-1">Planifica tu ruta</h1>
+                    <p className="text-sm text-[#5A7896] font-medium">Ajusta tus restricciones. Te mostramos solo lo viable.</p>
                   </div>
-                </div>
-                <div className="px-5 mt-4">
-                  <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
-                    <h3 className="font-extrabold text-[#0F305B] flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-[#ECFDF5] grid place-items-center text-sm border border-[#D1FAE5]">💰</span> Presupuesto total (CLP)</h3>
-                    <div className="mt-4 relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5A7896] font-bold">$</span>
-                      <input type="number" value={preferencias.presupuesto} onChange={e=> setPreferencias({ ...preferencias, presupuesto: Number(e.target.value)||0 })} className="w-full bg-[#F1F5F9] border border-[#E6EEF7] rounded-xl pl-7 pr-4 py-3.5 font-extrabold text-[#0F305B] outline-none focus:border-[#0F305B]" />
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 mt-3">
-                      {[10000,15000,25000].map(v=> (
-                        <button key={v} onClick={()=> setPreferencias({ ...preferencias, presupuesto: v })} className={`py-2 rounded-full text-xs font-extrabold border ${preferencias.presupuesto===v ? 'bg-[#0F305B] text-white border-[#0F305B]' : 'bg-white border-[#E6EEF7] text-[#3A5A7A]'}`}>${v.toLocaleString('es-CL')}</button>
-                      ))}
+                  <div className="px-5 mt-5">
+                    <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <h3 className="font-extrabold text-[#0F305B] flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-[#E6EEF7] grid place-items-center text-sm border border-[#D6E3F3]">⏱</span> Tiempo disponible</h3>
+                        <span className="bg-[#0F305B] text-white text-sm font-extrabold px-3 py-1.5 rounded-full">{preferencias.tiempo}h</span>
+                      </div>
+                      <input type="range" min="1" max="8" step="0.5" value={preferencias.tiempo} onChange={e=> setPreferencias({ ...preferencias, tiempo: parseFloat(e.target.value)})} className="w-full mt-5" />
+                      <div className="flex justify-between text-xs text-[#5A7896] mt-1 font-bold"><span>1h</span><span>4h</span><span>8h</span></div>
                     </div>
                   </div>
-                </div>
-                <div className="px-5 mt-4">
-                  <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
-                    <h3 className="font-extrabold text-[#0F305B]">Intereses</h3>
-                    <p className="text-xs text-[#5A7896] mt-1 font-medium">Elige al menos uno para personalizar</p>
-                    <div className="grid grid-cols-2 gap-2.5 mt-4">
-                      {categorias.map(cat=>{
-                        const activo=preferencias.intereses.includes(cat)
-                        const icons={'Museos':'🏛️','Gastronomía':'🍽️','Histórico':'🏰','Parques':'🌳','Shopping':'🛍️','Vida Nocturna':'🌃'}
-                        return (
-                          <button key={cat} onClick={()=> toggleInteres(cat)} className={`flex items-center gap-2.5 px-4 py-3.5 rounded-2xl border text-sm font-extrabold text-left transition ${activo ? 'bg-[#0F305B] text-white border-[#0F305B] shadow' : 'bg-[#F8FAFC] border-[#E6EEF7] text-[#3A5A7A]'}`}>
-                            <span className={`w-8 h-8 rounded-full grid place-items-center text-sm ${activo ? 'bg-white/15' : 'bg-white border border-[#E6EEF7]'}`}>{icons[cat]}</span>
-                            {cat}{activo && <span className="ml-auto">✓</span>}
-                          </button>
-                        )
-                      })}
+                  <div className="px-5 mt-4">
+                    <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
+                      <h3 className="font-extrabold text-[#0F305B] flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-[#ECFDF5] grid place-items-center text-sm border border-[#D1FAE5]">💰</span> Presupuesto total (CLP)</h3>
+                      <div className="mt-4 relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5A7896] font-bold">$</span>
+                        <input type="number" value={preferencias.presupuesto} onChange={e=> setPreferencias({ ...preferencias, presupuesto: Number(e.target.value)||0 })} className="w-full bg-[#F1F5F9] border border-[#E6EEF7] rounded-xl pl-7 pr-4 py-3.5 font-extrabold text-[#0F305B] outline-none focus:border-[#0F305B]" />
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 mt-3">
+                        {[10000,15000,25000].map(v=> (
+                          <button key={v} onClick={()=> setPreferencias({ ...preferencias, presupuesto: v })} className={`py-2 rounded-full text-xs font-extrabold border ${preferencias.presupuesto===v ? 'bg-[#0F305B] text-white border-[#0F305B]' : 'bg-white border-[#E6EEF7] text-[#3A5A7A]'}`}>${v.toLocaleString('es-CL')}</button>
+                        ))}
+                      </div>
                     </div>
-                    {errorForm && <p className="text-xs text-red-600 mt-2 font-bold">⚠ {errorForm}</p>}
+                  </div>
+                  <div className="px-5 mt-4 pb-2">
+                    <div className="bg-white border border-[#E6EEF7] rounded-2xl p-5 shadow-sm">
+                      <h3 className="font-extrabold text-[#0F305B]">Intereses</h3>
+                      <p className="text-xs text-[#5A7896] mt-1 font-medium">Elige al menos uno para personalizar</p>
+                      <div className="grid grid-cols-2 gap-2.5 mt-4">
+                        {categorias.map(cat=>{
+                          const activo=preferencias.intereses.includes(cat)
+                          const icons={'Museos':'🏛️','Gastronomía':'🍽️','Histórico':'🏰','Parques':'🌳','Shopping':'🛍️','Vida Nocturna':'🌃'}
+                          return (
+                            <button key={cat} onClick={()=> toggleInteres(cat)} className={`flex items-center gap-2.5 px-4 py-3.5 rounded-2xl border text-sm font-extrabold text-left transition ${activo ? 'bg-[#0F305B] text-white border-[#0F305B] shadow' : 'bg-[#F8FAFC] border-[#E6EEF7] text-[#3A5A7A]'}`}>
+                              <span className={`w-8 h-8 rounded-full grid place-items-center text-sm ${activo ? 'bg-white/15' : 'bg-white border border-[#E6EEF7]'}`}>{icons[cat]}</span>
+                              {cat}{activo && <span className="ml-auto">✓</span>}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      {errorForm && <p className="text-xs text-red-600 mt-2 font-bold">⚠ {errorForm}</p>}
+                    </div>
                   </div>
                 </div>
-                <div className="px-5 mt-6">
-                  <button onClick={handleGenerar} disabled={loading} className="w-full bg-[#0F305B] hover:bg-[#0A2540] disabled:bg-slate-300 text-white font-extrabold py-4 rounded-full shadow-lg flex items-center justify-center gap-2 transition">
+                {/* Botón fijo central - siempre visible sin scroll */}
+                <div className="sticky bottom-0 bg-white border-t border-[#E6EEF7] px-5 py-4 shadow-[0_-8px_24px_rgba(15,48,91,0.08)]">
+                  <button onClick={handleGenerar} disabled={loading} className="w-full max-w-sm mx-auto bg-[#0F305B] hover:bg-[#0A2540] disabled:bg-slate-300 text-white font-extrabold py-4 rounded-full shadow-lg flex items-center justify-center gap-2 transition block">
                     {loading ? <><span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"/> Generando tu ruta...</> : <>✨ Generar Ruta</>}
                   </button>
                   <p className="text-center text-xs text-[#5A7896] mt-2 font-medium">Solo verás lugares que encajan en tu tiempo y presupuesto.</p>
@@ -397,7 +390,7 @@ export default function App() {
 
             {/* RUTA SUGERIDA - con CHECKLIST + ELIMINAR */}
             {pantalla==='RUTA' && (
-              <motion.div key="ruta" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="pb-28 bg-[#F8FAFC]">
+              <motion.div key="ruta" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} className="pb-36 bg-[#F8FAFC]">
                 <div className="relative h-[264px] w-full overflow-hidden">
                   <img src={itinerario?.paradas?.[0]?.imagen || "https://commons.wikimedia.org/wiki/Special:FilePath/Museo%20Nacional%20de%20Bellas%20Artes%20Santiago.jpg?width=1200"} alt="Ruta" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A2540]/85 via-[#0A2540]/35 to-[#0A2540]/10" />
@@ -439,18 +432,11 @@ export default function App() {
                     </div>
                     <div className="px-4 py-3 flex items-center justify-between bg-white"><p className="text-xs font-extrabold text-[#0F305B]">Ruta optimizada a pie</p><button className="text-xs font-extrabold text-[#0F305B]">Abrir en Maps →</button></div>
                   </div>
-                  <div className="bg-[#0F305B] rounded-2xl p-4 text-white border border-[#1A3A5A]">
-                    <div className="flex items-center gap-3">
-                      <img src="https://i.pravatar.cc/100?img=15" alt="guia" className="w-10 h-10 rounded-full object-cover border-2 border-white/20" />
-                      <div className="flex-1"><p className="text-sm font-extrabold leading-none">Guía Virtual • Javiera</p><p className="text-xs text-white/70">"El Bellas Artes guarda la colección más antigua..."</p></div>
-                      <button onClick={()=> setAudioPlaying(!audioPlaying)} className="w-10 h-10 rounded-full bg-[#FFC727] text-[#0F305B] grid place-items-center font-bold shadow">{audioPlaying ? '❚❚' : '▶'}</button>
-                    </div>
-                    <div className="mt-3 flex items-center gap-3"><span className="text-xs font-mono text-white/70">01:12</span><div className="flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden"><div className="h-full bg-[#FFC727] rounded-full transition-all" style={{ width: `${audioProgress}%` }}/></div><span className="text-xs font-mono text-white/70">03:24</span></div>
-                  </div>
+
                 </div>
                 <div className="px-5 mt-6">
                   <h3 className="font-extrabold text-[#0F305B]">Tu itinerario</h3>
-                  <p className="text-xs text-[#5A7896] mt-1 font-medium">Toca el checkbox al visitar y ❌ para quitar lugares que no te interesen.</p>
+                  <p className="text-xs text-[#5A7896] mt-1 font-medium">Toca el checkbox al visitar y <span className="inline-flex align-middle w-4 h-4 rounded-full bg-white border border-[#FECACA] text-red-500 items-center justify-center mx-1"><IconTrash/></span> para quitar lugares.</p>
                   <div className="mt-4 space-y-3">
                     {(itinerario?.paradas || []).map((p,i)=> {
                       const hecho = visitados.has(p.id)
@@ -664,7 +650,8 @@ export default function App() {
           </AnimatePresence>
         </div>
 
-        {/* NAVBAR - simbología mejorada */}
+        {/* NAVBAR - simbología mejorada - oculto en FORM para dejar botón Generar central */}
+        {pantalla !== 'FORM' && (
         <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-[#E6EEF7] px-6 pt-2 pb-4 rounded-t-3xl shadow-[0_-8px_24px_rgba(15,48,91,0.08)]">
           <div className="flex items-center justify-between">
             {[
@@ -684,6 +671,7 @@ export default function App() {
           </div>
           <div className="w-24 h-1 bg-[#0F305B] rounded-full mx-auto mt-3" />
         </div>
+        )}
 
         <AnimatePresence>
           {loading && (
